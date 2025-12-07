@@ -1,0 +1,27 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  client:
+    # Don't register this Eureka server with itself
+    register-with-eureka: false
+    # Don't fetch registry information from other Eureka servers
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  server:
+    # Disable self-preservation mode in development
+    # In production, set this to true
+    enable-self-preservation: false
+    # How often to evict expired instances (in ms)
+    eviction-interval-timer-in-ms: 5000
+
+logging:
+  level:
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO

@@ -24,11 +24,12 @@ public class JwtUtil {
     private static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 1000; // 24 hours
 
     /**
-     * Generate JWT token with email and role
+     * Generate JWT token with email, role, and userId
      */
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, String role, Long userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
+        claims.put("userId", userId); // ✅ ADD THIS
         return createToken(claims, email);
     }
 
@@ -60,6 +61,13 @@ public class JwtUtil {
      */
     public String extractRole(String token) {
         return extractClaim(token, claims -> claims.get("role", String.class));
+    }
+
+    /**
+     * Extract userId from token - NEW METHOD
+     */
+    public Long extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId", Long.class));
     }
 
     /**

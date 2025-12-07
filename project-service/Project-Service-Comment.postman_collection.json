@@ -1,0 +1,582 @@
+{
+	"info": {
+		"_postman_id": "39c1a735-8171-47be-89ec-c8090a7cc5de",
+		"name": "Project-Service-Comment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21541432",
+		"_collection_link": "https://jira-project-management-9658.postman.co/workspace/Jira-Project-Management-Workspa~59b5cc03-5d9b-4eec-a549-4efe35700600/collection/21541432-39c1a735-8171-47be-89ec-c8090a7cc5de?action=share&source=collection_link&creator=21541432"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwic3ViIjoiYWRtaW5AdGVzdC5jb20iLCJpYXQiOjE3NjUwMjgxNzIsImV4cCI6MTc2NTExNDU3Mn0.H_piR43NidPCmkqIhdYmUp4Qm5mF-2GaE-bVSNAMbJ0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"content\": \"This is my first comment on this task\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Comments for a Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImlhdCI6MTc2NTAzMjg5NCwiZXhwIjoxNzY1MTE5Mjk0fQ.Q5e2ZX9d8o2ej8oIWSp4qGEHFvsbW6xfuGDlyFqJE9M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImlhdCI6MTc2NTAzMjg5NCwiZXhwIjoxNzY1MTE5Mjk0fQ.Q5e2ZX9d8o2ej8oIWSp4qGEHFvsbW6xfuGDlyFqJE9M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"content\": \"Updated comment content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/comments/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"comments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImlhdCI6MTc2NTAzMjg5NCwiZXhwIjoxNzY1MTE5Mjk0fQ.Q5e2ZX9d8o2ej8oIWSp4qGEHFvsbW6xfuGDlyFqJE9M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/comments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"comments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Attachment to Task",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Attachments for a Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImlhdCI6MTc2NTAzMjg5NCwiZXhwIjoxNzY1MTE5Mjk0fQ.Q5e2ZX9d8o2ej8oIWSp4qGEHFvsbW6xfuGDlyFqJE9M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/attachments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Attachment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImlhdCI6MTc2NTAzMjg5NCwiZXhwIjoxNzY1MTE5Mjk0fQ.Q5e2ZX9d8o2ej8oIWSp4qGEHFvsbW6xfuGDlyFqJE9M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/attachments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"attachments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unauthorized Comment Update (Different User)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"content\": \"Trying to update someone else's comment\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/comments/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"comments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Comment on Non-existent Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"content\": \"Comment on non-existent task\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/9999/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"9999",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Comment (Blank Content)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"content\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/1/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"1",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Status",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Priority",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/search?priority=HIGH&page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "priority",
+							"value": "HIGH"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Status and Priority",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/search?status=IN_PROGRESS&priority=HIGH&page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "IN_PROGRESS"
+						},
+						{
+							"key": "priority",
+							"value": "HIGH"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Project",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/search?projectId=1&page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "projectId",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Due Date Range",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MiwiZW1haWwiOiJtYW5hZ2VyQHRlc3QuY29tIiwic3ViIjoibWFuYWdlckB0ZXN0LmNvbSIsImlhdCI6MTc2NTA0MTk3MCwiZXhwIjoxNzY1MTI4MzcwfQ.PRVr5ai5dVSlQ8F98syR_icYPuE_4rvURcNV0Qcwi3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/tasks/search?dueDateFrom=2024-12-01&dueDateTo=2024-12-31&page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"tasks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "dueDateFrom",
+							"value": "2024-12-01"
+						},
+						{
+							"key": "dueDateTo",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

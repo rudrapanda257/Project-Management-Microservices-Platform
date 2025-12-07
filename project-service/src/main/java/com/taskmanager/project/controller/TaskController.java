@@ -2,17 +2,25 @@ package com.taskmanager.project.controller;
 
 import com.taskmanager.project.dto.TaskRequest;
 import com.taskmanager.project.dto.TaskResponse;
+import com.taskmanager.project.dto.TaskSearchCriteria;
+import com.taskmanager.project.enums.Priority;
+import com.taskmanager.project.enums.Status;
+import com.taskmanager.project.service.TaskSearchService;
 import com.taskmanager.project.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +31,7 @@ import java.util.Map;
 public class TaskController {
 
     private final TaskService taskService;
+    private final TaskSearchService taskSearchService;
 
     /**
      * Create a task in a project
@@ -129,13 +138,46 @@ public class TaskController {
     }
 
     /**
+     * Search tasks with dynamic criteria
+     * ✅ FIXED: Now returns Page<TaskResponse> directly from service
+     */
+    @GetMapping("/api/tasks/search")
+    public ResponseEntity<Page<TaskResponse>> searchTasks(
+            @RequestParam(value = "projectId", required = false) Long projectId,
+            @RequestParam(value = "assigneeId", required = false) Long assigneeId,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "priority", required = false) String priority,
+            @RequestParam(value = "dueDateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDateFrom,
+            @RequestParam(value = "dueDateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDateTo,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        log.info("Request to search tasks with criteria - projectId: {}, status: {}, priority: {}",
+                projectId, status, priority);
+
+        TaskSearchCriteria criteria = TaskSearchCriteria.builder()
+                .projectId(projectId)
+                .assigneeId(assigneeId)
+                .status(status != null ? Status.valueOf(status) : null)
+                .priority(priority != null ? Priority.valueOf(priority) : null)
+                .dueDateFrom(dueDateFrom)
+                .dueDateTo(dueDateTo)
+                .build();
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        // ✅ FIXED: Service now returns Page<TaskResponse>, no need to map here
+        Page<TaskResponse> results = taskSearchService.searchTasks(criteria, pageable);
+
+        return ResponseEntity.ok(results);
+    }
+
+    /**
      * Extract current user ID from JWT token
      */
     private Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        // For Day 3, we'll use a fixed user ID of 1
-        // In Day 7, we'll use Feign Client to fetch actual user ID from User Service
-        return 1L; // Temporary: assumes user ID is 1
+        String userIdStr = authentication.getName();
+        return Long.parseLong(userIdStr);
     }
 }

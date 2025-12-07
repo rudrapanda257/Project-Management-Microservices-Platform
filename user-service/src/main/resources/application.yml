@@ -25,6 +25,26 @@ jwt:
   secret: ${JWT_SECRET:mySecretKey12345678901234567890123456789012}
   expiration: 86400000
 
+# Eureka Client Configuration - NEW
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    # How often to fetch registry information (in seconds)
+    registry-fetch-interval-seconds: 30
+
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    # Lease renewal interval (heartbeat) - default is 30s
+    lease-renewal-interval-in-seconds: 30
+    # Time Eureka waits before removing instance - default is 90s
+    lease-expiration-duration-in-seconds: 90
+    # Instance ID shown in Eureka dashboard
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
 logging:
   level:
     com.taskmanager: INFO

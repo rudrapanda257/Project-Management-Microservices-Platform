@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 6 Architecture - Config Server & API Gateway</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .architecture {
+            display: grid;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .layer {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+        }
+
+        .layer-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-title::before {
+            content: '';
+            width: 5px;
+            height: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .service {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .service:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .service.gateway { border-color: #e74c3c; }
+        .service.config { border-color: #3498db; }
+        .service.eureka { border-color: #2ecc71; }
+        .service.user { border-color: #f39c12; }
+        .service.project { border-color: #9b59b6; }
+
+        .service-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .service-port {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            color: #6c757d;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .flow {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .flow-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-text {
+            color: #495057;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-box-title {
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .info-box-content {
+            color: #455a64;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .services {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏗️ Day 6 Architecture</h1>
+        <p class="subtitle">Config Server & API Gateway Integration</p>
+
+        <div class="info-box">
+            <div class="info-box-title">📌 What Changed Today?</div>
+            <div class="info-box-content">
+                <strong>Before Day 6:</strong> Each service had its own configuration. Clients called services directly on different ports.<br><br>
+                <strong>After Day 6:</strong> All configurations centralized in Git. All client requests go through API Gateway (port 8080) which handles routing, authentication, and load balancing.
+            </div>
+        </div>
+
+        <div class="architecture">
+            <!-- Client Layer -->
+            <div class="layer">
+                <div class="layer-title">👥 Client Layer</div>
+                <div class="services">
+                    <div class="service gateway">
+                        <div class="service-name">🌐 API Gateway</div>
+                        <div class="service-port">Port: 8080</div>
+                        <div class="service-desc">Single entry point for all requests. Validates JWT, routes to services, and provides load balancing.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Infrastructure Layer -->
+            <div class="layer">
+                <div class="layer-title">🔧 Infrastructure Services</div>
+                <div class="services">
+                    <div class="service config">
+                        <div class="service-name">⚙️ Config Server</div>
+                        <div class="service-port">Port: 8888</div>
+                        <div class="service-desc">Provides centralized configuration from Git repository. All services fetch their config on startup.</div>
+                    </div>
+                    <div class="service eureka">
+                        <div class="service-name">🔍 Eureka Server</div>
+                        <div class="service-port">Port: 8761</div>
+                        <div class="service-desc">Service registry. Gateway uses it to discover and route to services dynamically.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Services Layer -->
+            <div class="layer">
+                <div class="layer-title">💼 Business Services</div>
+                <div class="services">
+                    <div class="service user">
+                        <div class="service-name">👤 User Service</div>
+                        <div class="service-port">Port: 8081</div>
+                        <div class="service-desc">Handles authentication (register/login) and user management. Generates JWT tokens.</div>
+                    </div>
+                    <div class="service project">
+                        <div class="service-name">📊 Project Service</div>
+                        <div class="service-port">Port: 8082</div>
+                        <div class="service-desc">Manages projects, tasks, comments, and attachments. Protected by JWT.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow">
+            <div class="flow-title">🔄 Request Flow: Creating a Project</div>
+            <div class="flow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Client Sends Request</div>
+                        <div class="step-desc">POST http://localhost:8080/api/projects with JWT token in Authorization header</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Gateway Receives Request</div>
+                        <div class="step-desc">API Gateway intercepts the request at port 8080</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">JWT Validation</div>
+                        <div class="step-desc">JwtAuthenticationFilter validates the token. Extracts user info (email, role, userId)</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Service Discovery</div>
+                        <div class="step-desc">Gateway queries Eureka: "Where is PROJECT-SERVICE?" → Gets "localhost:8082"</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">Route Request</div>
+                        <div class="step-desc">Gateway forwards request to Project Service with added headers (X-User-Id, X-User-Email, X-User-Role)</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-title">Service Processes Request</div>
+                        <div class="step-desc">Project Service creates project in database and returns response</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <div class="step-title">Response Back to Client</div>
+                        <div class="step-desc">Gateway forwards response back to client with 201 Created status</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow">
+            <div class="flow-title">⚙️ Configuration Flow: Service Startup</div>
+            <div class="flow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Config Server Starts</div>
+                        <div class="step-desc">Reads configuration from ~/config-repo Git repository on port 8888</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Service Starts (e.g., User Service)</div>
+                        <div class="step-desc">Reads bootstrap.yml → Finds Config Server URL: http://localhost:8888</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Fetch Configuration</div>
+                        <div class="step-desc">Service calls: GET http://localhost:8888/user-service/default</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Config Server Returns Config</div>
+                        <div class="step-desc">Returns: application.yml (shared) + user-service.yml (specific)</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">Service Applies Configuration</div>
+                        <div class="step-desc">Uses database URL, JWT secret, port, Eureka URL from config</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-title">Register with Eureka</div>
+                        <div class="step-desc">Service registers itself with Eureka at localhost:8761</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <div class="step-title">Service Ready</div>
+                        <div class="step-desc">Service is now ready to receive requests through Gateway</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <div class="legend-text">Gateway (Entry Point)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3498db;"></div>
+                <div class="legend-text">Config Server</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2ecc71;"></div>
+                <div class="legend-text">Eureka (Discovery)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f39c12;"></div>
+                <div class="legend-text">User Service</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #9b59b6;"></div>
+                <div class="legend-text">Project Service</div>
+            </div>
+        </div>
+
+        <div class="info-box" style="background: #fff3e0; border-color: #ff9800;">
+            <div class="info-box-title" style="color: #f57c00;">🎯 Key Benefits of Day 6 Architecture</div>
+            <div class="info-box-content" style="color: #e65100;">
+                <strong>1. Centralized Configuration:</strong> Change database URL in one place, all services pick it up<br>
+                <strong>2. Single Entry Point:</strong> Clients only need to know port 8080<br>
+                <strong>3. JWT at Gateway:</strong> Authentication happens once at gateway, not in every service<br>
+                <strong>4. Load Balancing:</strong> Gateway can route to multiple instances of same service<br>
+                <strong>5. Service Discovery:</strong> Services can move, gateway finds them automatically<br>
+                <strong>6. Configuration Versioning:</strong> All configs in Git with full history
+            </div>
+        </div>
+    </div>
+</body>
+</html>
