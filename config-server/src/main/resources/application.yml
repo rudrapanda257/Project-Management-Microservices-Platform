@@ -1,0 +1,33 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # Local Git repository path
+          # For Windows: file:///${user.home}/config-repo
+          # For Linux/Mac: file://${user.home}/config-repo
+          uri: file:///C:/Users/rudra/OneDrive/Desktop/JIRA/config-repo
+
+          # Uncomment below to use GitHub repository instead
+          # uri: https://github.com/yourusername/config-repo
+          # username: your-github-username
+          # password: your-github-token
+
+          default-label: main
+          clone-on-start: true
+
+  # Disable security for now (can enable later with Spring Security)
+  security:
+    user:
+      name: admin
+      password: admin123
+
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
+    org.springframework.boot: INFO
