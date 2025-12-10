@@ -1,0 +1,44 @@
+# Maven
+target/
+.mvn/
+mvnw
+mvnw.cmd
+
+# Git
+.git/
+.gitignore
+.env.example
+.env
+
+# Documentation
+*.md
+README.md
+LICENSE
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.test/
+coverage/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache

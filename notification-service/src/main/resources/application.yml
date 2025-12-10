@@ -5,7 +5,8 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/projectmanager_dev
+    # url: jdbc:postgresql://localhost:5432/projectmanager_dev
+    url: jdbc:postgresql://postgres:5432/taskmanager
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -18,7 +19,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
   kafka:
-    bootstrap-servers: localhost:9092
+    # bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
     consumer:
       group-id: notification-service-group
       auto-offset-reset: earliest
@@ -34,7 +36,7 @@ jwt:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
   instance:

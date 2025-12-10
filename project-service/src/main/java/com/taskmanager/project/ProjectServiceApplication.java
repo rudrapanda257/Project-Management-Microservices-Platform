@@ -3,6 +3,7 @@ package com.taskmanager.project;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * Project Service Application
@@ -15,6 +16,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient // NEW - Enable service registration with Eureka
+@EnableFeignClients
 public class ProjectServiceApplication {
 
     public static void main(String[] args) {

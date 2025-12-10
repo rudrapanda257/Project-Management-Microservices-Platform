@@ -5,16 +5,36 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.taskmanager</groupId>
-        <artifactId>task-management-platform</artifactId>
-        <version>1.0.0</version>
-    </parent>
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.0</version>
+    <relativePath/>
+</parent>
 
+     
+    <groupId>com.taskmanager</groupId>
     <artifactId>project-service</artifactId>
     <version>1.0.0</version>
     <name>Project Service</name>
     <description>Project and Task Management Service</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-cloud.version>2023.0.0</spring-cloud.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Spring Boot Web -->
@@ -92,6 +112,13 @@
         <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+            <!-- Spring Boot Actuator for Health Checks and Monitoring -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    
+
         
         <!-- Feign Client - NEW -->
         <dependency>
@@ -109,12 +136,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
-
-        <!-- Spring Boot Actuator (for refresh endpoint) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Spring Boot Test -->
