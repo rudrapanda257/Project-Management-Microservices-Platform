@@ -145,7 +145,7 @@ This project is for educational purposes.
 
 ## 👥 Authors
 
-_Your name here_
+Rudra Narayan Panda
 
 ## 🙏 Acknowledgments
 
